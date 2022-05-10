@@ -11,14 +11,15 @@
 // console.log(removeFromArray([1, 2, 3, 4], 3, 2))
 
 const removeFromArray = function(array, ...removeNumber) {
-    let result = [];
+    // let result = [];
     
-    for(let i of array){
-        if (!(removeNumber.includes(i))){
-            result.push(i)
-        }
-    }
-    return result
+    // for(let i of array){
+    //     if (!(removeNumber.includes(i))){
+    //         result.push(i)
+    //     }
+    // }
+    // return result
+    return result = array.filter(num => !(removeNumber.includes(num)));
 };
 
 //console.log(removeFromArray([1, 2, 3, 4], 3, 2))
