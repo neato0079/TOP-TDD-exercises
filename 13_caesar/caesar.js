@@ -19,6 +19,7 @@ const caesar = function(string, rightShiftCount) {
         if(typeof num === 'number'){
             return num + rightShiftCount      
         }else{
+            //we're not trying to shift punctuation so return if it's a punctuation
             return num
         }
     })
@@ -32,13 +33,13 @@ const caesar = function(string, rightShiftCount) {
             //if the current shifted char is some kind of punctuation, it is returned
             wrappedAsciiArray.push(shiftedASCIIVal)
         }else if(shiftedASCIIVal > 122){
-            //wrapping the front of the alphabet
-            while(shiftedASCIIVal > 122){
-                shiftedASCIIVal -= 122
-            }
-            wrappedAsciiArray.push(shiftedASCIIVal + 96)
-        }else if(shiftedASCIIVal < 97){
             //wrapping the back of the alphabet
+            while(shiftedASCIIVal > 122){
+                shiftedASCIIVal = 96 + (shiftedASCIIVal - 122)
+            }
+            wrappedAsciiArray.push(shiftedASCIIVal)
+        }else if(shiftedASCIIVal < 97){
+            //wrapping the front of the alphabet
             while(shiftedASCIIVal < 97){
                 shiftedASCIIVal = 123 - (97 - shiftedASCIIVal)
             }
@@ -60,29 +61,7 @@ const caesar = function(string, rightShiftCount) {
             return char
         }
     })
-
-    //reapply capitalization
-    // charArray = charArray.map(char =>{
-    //     for(i = 0; i < string.length; i++){
-    //         if(string[i].toUpperCase() === string[i]){
-    //             return char.toUpperCase()
-    //         }else{
-    //             return char
-    //         }
-    //     }
-    // })
-
-    // charArray = charArray.map(char =>{
-    //     console.log(charArray.indexOf(char))
-    //     if(string[charArray.indexOf(char)].toUpperCase() === string[charArray.indexOf(char)]){
-    //         return char.toUpperCase()
-    //     }else{
-    //         return char
-    //     }
-        
-    // })
-
-    
+  
 
     //reapply capitalization
     let charArrayWithCaps = []
@@ -98,25 +77,14 @@ const caesar = function(string, rightShiftCount) {
     //convert char array to string
     let caesarString = charArrayWithCaps.join('')
     
+
     // console.log(charArrayWithCaps)
     return caesarString
-    //ASCIIaphabet.map(letter => {
-//         letter + rightShift
-//     })
-// };
+
 }
-const message = 'Mjqqt, Btwqi!'
+const message = 'Hello, World!'
 const word = 'z'
-console.log(caesar(message, -5))
-// console.log(hello[2].charCodeAt())
+console.log(caesar(message, 75))
+
 // Do not edit below this line
 module.exports = caesar;
-
-// convert char to ascii
-// add num to ascii
-// reconvert ascii to char
-
-// how do you wrap the alphabet though?
-// if num after addition is larger than the last ascii val (for z), then subtract total ascii alphabet value from the first sum. now you have the ascii value post wrap
-
-// ezpz??????????????
