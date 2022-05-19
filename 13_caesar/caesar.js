@@ -15,7 +15,7 @@ const caesar = function(string, rightShiftCount) {
     }
 
     //apply shift to ascii array
-    asciiArray = asciiArray.map(num => {
+    let shiftedAsciiArray = asciiArray.map(num => {
         if(typeof num === 'number'){
             return num + rightShiftCount      
         }else{
@@ -24,17 +24,36 @@ const caesar = function(string, rightShiftCount) {
     })
 
     //apply wrap
-    asciiArray = asciiArray.map(num => {
-        if(num > 122){
-            return num - 26      
+    let wrappedAsciiArray = [];
+    for(i = 0; i < shiftedAsciiArray.length; i++){
+        let originalASCIIVal = asciiArray[i];
+        let shiftedASCIIVal = shiftedAsciiArray[i];
+        if(typeof originalASCIIVal !== 'number'){
+            //if the current shifted char is some kind of punctuation, it is returned
+            wrappedAsciiArray.push(shiftedASCIIVal)
+        }else if(shiftedASCIIVal > 122){
+            //wrapping the front of the alphabet
+            while(shiftedASCIIVal > 122){
+                shiftedASCIIVal -= 122
+            }
+            wrappedAsciiArray.push(shiftedASCIIVal + 96)
+        }else if(shiftedASCIIVal < 97){
+            //wrapping the back of the alphabet
+            while(shiftedASCIIVal < 97){
+                shiftedASCIIVal = 123 - (97 - shiftedASCIIVal)
+            }
+            wrappedAsciiArray.push(shiftedASCIIVal)
         }else{
-            return num
+            //if the current shifted char is within the bounds of the alphabet then return it
+            wrappedAsciiArray.push(shiftedASCIIVal)
         }
-    })
+
+    }
+    
 
 
     //convert ascii array to char array
-    let charArray = asciiArray.map(char => {
+    let charArray = wrappedAsciiArray.map(char => {
         if(typeof char === 'number'){
             return String.fromCharCode(char)      
         }else{
@@ -79,16 +98,16 @@ const caesar = function(string, rightShiftCount) {
     //convert char array to string
     let caesarString = charArrayWithCaps.join('')
     
-
+    // console.log(charArrayWithCaps)
     return caesarString
     //ASCIIaphabet.map(letter => {
 //         letter + rightShift
 //     })
 // };
 }
-const message = 'Hello, World!'
+const message = 'Mjqqt, Btwqi!'
 const word = 'z'
-console.log(caesar(message, 5))
+console.log(caesar(message, -5))
 // console.log(hello[2].charCodeAt())
 // Do not edit below this line
 module.exports = caesar;
